@@ -19,16 +19,18 @@ if TORCH_MAJOR == 0 and TORCH_MINOR < 4:
 cmdclass = {}
 ext_modules = []
 
-if "--cpp_ext" in sys.argv or "--cuda_ext" in sys.argv:
+# if "--cpp_ext" in sys.argv or "--cuda_ext" in sys.argv:
+if True:
     if TORCH_MAJOR == 0:
         raise RuntimeError("--cpp_ext requires Pytorch 1.0 or later, "
                            "found torch.__version__ = {}".format(torch.__version__))
     from torch.utils.cpp_extension import BuildExtension
     cmdclass['build_ext'] = BuildExtension
 
-if "--cpp_ext" in sys.argv:
+# if "--cpp_ext" in sys.argv:
+if True:
     from torch.utils.cpp_extension import CppExtension
-    sys.argv.remove("--cpp_ext")
+    # sys.argv.remove("--cpp_ext")
     ext_modules.append(
         CppExtension('apex_C',
                      ['csrc/flatten_unflatten.cpp',]))
@@ -54,9 +56,10 @@ def check_cuda_torch_binary_vs_bare_metal(cuda_dir):
                            "https://github.com/NVIDIA/apex/pull/323#discussion_r287021798.  "
                            "You can try commenting out this check (at your own risk).")
 
-if "--cuda_ext" in sys.argv:
+#if "--cuda_ext" in sys.argv:
+if True:
     from torch.utils.cpp_extension import CUDAExtension
-    sys.argv.remove("--cuda_ext")
+    # sys.argv.remove("--cuda_ext")
 
     if torch.utils.cpp_extension.CUDA_HOME is None:
         raise RuntimeError("--cuda_ext was requested, but nvcc was not found.  Are you sure your environment has nvcc available?  If you're installing within a container from https://hub.docker.com/r/pytorch/pytorch, only images whose names contain 'devel' will provide nvcc.")
